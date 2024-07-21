@@ -164,7 +164,7 @@ public:
             std::string tag;
             std::string iv;
 
-            trim_cipher(reinterpret_cast<const char *>(ciphertext), password, tag, iv);
+            trim_cipher(std::string(reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2)), sqlite3_column_bytes(stmt, 2)), password, tag, iv);
 
             std::vector<unsigned char> pass_bytes;
             utils::conversion::string_to_byte_vector(password, pass_bytes);
@@ -217,7 +217,7 @@ public:
             std::string tag;
             std::string iv;
 
-            trim_cipher(reinterpret_cast<const char *>(ciphertext), password, tag, iv);
+            trim_cipher(std::string(reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3)), sqlite3_column_bytes(stmt, 3)), password, tag, iv);
 
             std::vector<unsigned char> pass_bytes;
             utils::conversion::string_to_byte_vector(password, pass_bytes);
@@ -292,7 +292,7 @@ public:
             std::string tag;
             std::string iv;
 
-            trim_cipher(reinterpret_cast<const char *>(ciphertext), password, tag, iv);
+            trim_cipher(std::string(reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3)), sqlite3_column_bytes(stmt, 3)), password, tag, iv);
 
             std::vector<unsigned char> pass_bytes;
             utils::conversion::string_to_byte_vector(password, pass_bytes);
