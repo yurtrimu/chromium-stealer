@@ -614,12 +614,11 @@ private:
 
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
-        json json_contents = json::parse(contents);
-        if (!json_contents.contains("encrypted_key")) {
-            return false;
-        }
+        json json_contents = nlohmann::json::parse(contents);
 
-        std::string encrypted_key = json_contents["encrypted_key"];
+        std::string encrypted_key = json_contents["os_crypt"]["encrypted_key"];
+
+        if (encrypted_key.empty()) { return false; }
 
         std::string decoded64key;
         base64::decode(encrypted_key, decoded64key);
